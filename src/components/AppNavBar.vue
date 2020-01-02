@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar color="green accent-4" app>
+    <v-app-bar color="green accent-4" app dark>
       <v-toolbar-title>Roomba</v-toolbar-title>
 
       <v-spacer></v-spacer>
