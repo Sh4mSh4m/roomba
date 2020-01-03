@@ -1,10 +1,10 @@
 <template>
   <v-card>
-    <v-card-title>Change#id</v-card-title>
+    <v-card-title># {{ change._id.$oid }}</v-card-title>
     <v-card-subtitle>
       <ul>
-        <li>status: clear</li>
-        <li>qual env status: ready</li>
+        <li>status: {{ change.status }}</li>
+        <li>qual env status: {{ change.qual_status }}</li>
       </ul>
     </v-card-subtitle>
     <v-card-actions>
@@ -26,6 +26,11 @@
 import BtnTooltipBottom from "@/components/buttons/ButtonTooltipBottom.vue";
 
 export default {
+  props: {
+    change: {
+      type: Object
+    }
+  },
   components: {
     BtnTooltipBottom
   }

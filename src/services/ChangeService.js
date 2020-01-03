@@ -12,7 +12,7 @@ const apiClient = axios.create({
 export default {
     getChanges() {
         return apiClient.get('/changes')
-    }
+    },
     getChange(id) {
         return apiClient.get('/changes/' + id)
       }
