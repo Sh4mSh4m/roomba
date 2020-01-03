@@ -1,19 +1,21 @@
 <template>
-  <v-card class="mb-2">
-    <v-card-title>#{{ index + 1 }} set</v-card-title>
+  <v-card class="ml-2 mb-2 mr-1">
+    <v-card-title>#{{ index + 1 }} set for {{ configlet.feature }}</v-card-title>
     <v-card-subtitle>{{ configlet.context }}</v-card-subtitle>
-    <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col cols="4">
-            <ul>
-              <li v-for="(line,index) in configlet.cmd_lines" :key="index">{{ line }}</li>
-            </ul>
-          </v-col>
-          <v-col cols="4">{{ configlet.change_buffer }}</v-col>
-          <v-col cols="4">{{ configlet.rollback_buffer }}</v-col>
-        </v-row>
-      </v-container>
+    <v-card-text v-if="c_display === 'CMD'">
+      <ul>
+        <li v-for="(line,index) in configlet.cmd_lines" :key="index">{{ line }}</li>
+      </ul>
+    </v-card-text>
+    <v-card-text v-if="c_display === 'CHANGE'">
+      <ul>
+        <li v-for="(line,index) in configlet.change_buffer" :key="index">{{ line }}</li>
+      </ul>
+    </v-card-text>
+    <v-card-text v-if="c_display === 'ROLLBACK'">
+      <ul>
+        <li v-for="(line,index) in configlet.rollback_buffer" :key="index">{{ line }}</li>
+      </ul>
     </v-card-text>
   </v-card>
 </template>
@@ -24,15 +26,16 @@ export default {
     index: Number,
     configlet: {
       type: Object
-    }
+    },
+    c_display: String
   },
   methods: {
-  belong: function (node, configlet) {
-    return node.filter(function (node) {
-      return node === configlet.node
-    })
+    belong: function(node, configlet) {
+      return node.filter(function(node) {
+        return node === configlet.node;
+      });
+    }
   }
-}
 };
 </script>
 

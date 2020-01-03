@@ -2,19 +2,24 @@
   <div>
     <v-container>
       <v-row>
-        <v-col cols="4">
+        <v-col cols="6">
           <ChangeMainCard :change="change" />
         </v-col>
       </v-row>
+      <v-radio-group v-model="c_display" row>
+        <v-radio name="c_diplay" label="Command lines" value="CMD"></v-radio>
+        <v-radio name="c_diplay" label="Change buffer" value="CHANGE"></v-radio>
+        <v-radio name="c_diplay" label="Rollback buffer" value="ROLLBACK"></v-radio>
+      </v-radio-group>
       <v-row v-for="(configlets, node) in configletsPerNode" :key="node">
         <v-col>
           <v-card>
             <v-card-title>{{ node }}</v-card-title>
-            <v-col>
-              <div v-for="(configlet, index) in configlets" :key="index">
-                <ConfigletCard :configlet="configlet" :index="index" />
-              </div>
+            <v-row>
+            <v-col cols="4" v-for="(configlet, index) in configlets" :key="index">
+                <ConfigletCard :configlet="configlet" :c_display="c_display" :index="index" />
             </v-col>
+            </v-row>
           </v-card>
         </v-col>
       </v-row>
@@ -29,16 +34,17 @@ import ConfigletCard from "@/components/ChangeConfigletCard.vue";
 import _ from "lodash";
 
 export default {
+  props: ["changeid"],
   data() {
     return {
-      change: {}
+      change: {},
+      c_display: "CMD"
     };
   },
   components: {
     ChangeMainCard,
-    ConfigletCard
+    ConfigletCard,
   },
-  props: ["changeid"],
   created() {
     ChangeService.getChange(this.changeid) // <-----
       .then(response => {
