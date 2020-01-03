@@ -6,11 +6,16 @@
           <ChangeMainCard :change="change" />
         </v-col>
       </v-row>
-      <v-row>
+      <v-row v-for="(configlets, node) in configletsPerNode" :key="node">
         <v-col>
-          <div v-for="(configlet, index) in change.configlets" :key="index">
-            <ConfigletCard :configlet="configlet" :index="index" />
-          </div>
+          <v-card>
+            <v-card-title>{{ node }}</v-card-title>
+            <v-col>
+              <div v-for="(configlet, index) in configlets" :key="index">
+                <ConfigletCard :configlet="configlet" :index="index" />
+              </div>
+            </v-col>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -21,6 +26,7 @@
 import ChangeService from "@/services/ChangeService.js";
 import ChangeMainCard from "@/components/ChangeMainCard.vue";
 import ConfigletCard from "@/components/ChangeConfigletCard.vue";
+import _ from "lodash";
 
 export default {
   data() {
@@ -41,6 +47,11 @@ export default {
       .catch(error => {
         console.log("There was an error:", error.response);
       });
+  },
+  computed: {
+    configletsPerNode() {
+      return _.groupBy(this.change.configlets, "node");
+    }
   }
 };
 </script>

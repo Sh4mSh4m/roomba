@@ -1,6 +1,6 @@
 <template>
-  <v-card>
-    <v-card-title>Configlet {{ index + 1 }} for {{ configlet.node }}</v-card-title>
+  <v-card class="mb-2">
+    <v-card-title>#{{ index + 1 }} set</v-card-title>
     <v-card-subtitle>{{ configlet.context }}</v-card-subtitle>
     <v-card-text>
       <v-container>
@@ -25,7 +25,14 @@ export default {
     configlet: {
       type: Object
     }
+  },
+  methods: {
+  belong: function (node, configlet) {
+    return node.filter(function (node) {
+      return node === configlet.node
+    })
   }
+}
 };
 </script>
 
