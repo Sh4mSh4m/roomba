@@ -6,7 +6,7 @@
           <ChangeMainCard :change="change" />
         </v-col>
         <v-col cols="6">
-          <Poller @sync-change="log" />
+          <Poller @sync-change="refresh" />
         </v-col>
       </v-row>
       <v-radio-group v-model="c_display" row>
@@ -69,6 +69,7 @@ export default {
       console.log("yeahhh");
     },
     refresh() {
+      console.log("refreshing wesh");
       ChangeService.getChange(this.changeid) // <-----
         .then(response => {
           this.change = response.data; // <--- set the events data

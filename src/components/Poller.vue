@@ -21,9 +21,12 @@ export default {
       this.$emit("sync-change");
     },
     connect() {
-      this.socket = new WebSocket("ws://localhost:8765");
-      this.socket.onopen = () => this.socket.send(JSON.stringify(this.message));
-      this.socket.onmessage = () => this.emits();
+      let socket = new WebSocket("ws://localhost:8765");
+      socket.onopen = () => socket.send(JSON.stringify(this.message));
+      socket.onmessage = e => {
+        console.log(e);
+        this.emits();
+      };
     }
   },
   created() {
