@@ -17,10 +17,13 @@ export default {
     };
   },
   methods: {
+    emits() {
+      this.$emit("sync-change");
+    },
     connect() {
       this.socket = new WebSocket("ws://localhost:8765");
       this.socket.onopen = () => this.socket.send(JSON.stringify(this.message));
-      this.socket.onmessage = event => console.log(event.data);
+      this.socket.onmessage = () => this.emits();
     }
   },
   created() {

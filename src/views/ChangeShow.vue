@@ -5,6 +5,9 @@
         <v-col cols="6">
           <ChangeMainCard :change="change" />
         </v-col>
+        <v-col cols="6">
+          <Poller @sync-change="log" />
+        </v-col>
       </v-row>
       <v-radio-group v-model="c_display" row>
         <v-radio name="c_diplay" label="Command lines" value="CMD"></v-radio>
@@ -16,9 +19,9 @@
           <v-card>
             <v-card-title>{{ node }}</v-card-title>
             <v-row>
-            <v-col cols="4" v-for="(configlet, index) in configlets" :key="index">
+              <v-col cols="4" v-for="(configlet, index) in configlets" :key="index">
                 <ConfigletCard :configlet="configlet" :c_display="c_display" :index="index" />
-            </v-col>
+              </v-col>
             </v-row>
           </v-card>
         </v-col>
@@ -31,6 +34,7 @@
 import ChangeService from "@/services/ChangeService.js";
 import ChangeMainCard from "@/components/ChangeMainCard.vue";
 import ConfigletCard from "@/components/ChangeConfigletCard.vue";
+import Poller from "@/components/Poller.vue";
 import _ from "lodash";
 
 export default {
@@ -44,6 +48,7 @@ export default {
   components: {
     ChangeMainCard,
     ConfigletCard,
+    Poller
   },
   created() {
     ChangeService.getChange(this.changeid) // <-----
@@ -57,6 +62,20 @@ export default {
   computed: {
     configletsPerNode() {
       return _.groupBy(this.change.configlets, "node");
+    }
+  },
+  methods: {
+    log() {
+      console.log("yeahhh");
+    },
+    refresh() {
+      ChangeService.getChange(this.changeid) // <-----
+        .then(response => {
+          this.change = response.data; // <--- set the events data
+        })
+        .catch(error => {
+          console.log("There was an error:", error.response);
+        });
     }
   }
 };
