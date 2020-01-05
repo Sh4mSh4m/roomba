@@ -54,9 +54,6 @@ export default {
     ChangeService.getChange(this.changeid) // <-----
       .then(response => {
         this.change = response.data; // <--- set the events data
-      })
-      .catch(error => {
-        console.log("There was an error:", error.response);
       });
   },
   computed: {
@@ -66,16 +63,13 @@ export default {
   },
   methods: {
     log() {
-      console.log("yeahhh");
+      //console.log("yeahhh");
     },
     refresh() {
-      console.log("refreshing wesh");
+      //console.log("refreshing wesh");
       ChangeService.getChange(this.changeid) // <-----
         .then(response => {
           this.change = response.data; // <--- set the events data
-        })
-        .catch(error => {
-          console.log("There was an error:", error.response);
         });
     }
   }

@@ -23,8 +23,8 @@ export default {
     connect() {
       let socket = new WebSocket("ws://localhost:8765");
       socket.onopen = () => socket.send(JSON.stringify(this.message));
-      socket.onmessage = e => {
-        console.log(e);
+      socket.onmessage = () => {
+        //console.log(e);
         this.emits();
       };
     }
