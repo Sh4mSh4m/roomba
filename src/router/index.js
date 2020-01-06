@@ -20,6 +20,13 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
+    path: "/change_new",
+    name: "change_new",
+    component: () =>
+      import(/* webpackChunkName: "changeNew" */ "../views/ChangeNew.vue"),
+    props: true
+  },
+  {
     path: "/change/:changeid",
     name: "change",
     component: () =>
