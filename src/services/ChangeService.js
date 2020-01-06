@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-    baseURL: `http://localhost:3000`,
+    baseURL: `http://configletstorev1:5004`,
     withCredentials: false, // This is the default
     headers: {
         Accept: 'application/json',
