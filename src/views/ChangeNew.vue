@@ -1,9 +1,18 @@
 <template>
-  <h1>New Change</h1>
+  <div>
+    <h1>New Change for fabric #UNK</h1>
+    <ChangeForm />
+  </div>
 </template>
 
 <script>
-export default {};
+import ChangeForm from "@/components/ChangeForm.vue";
+
+export default {
+  components: {
+    ChangeForm
+  }
+};
 </script>
 
 <style>

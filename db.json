@@ -1,4 +1,9 @@
 {
+    "nodes": [
+        "leaf_a",
+        "leaf_b",
+        "spine_a"
+    ],
     "changes": [
         {
             "id": 1,
