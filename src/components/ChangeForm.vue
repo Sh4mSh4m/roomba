@@ -13,24 +13,28 @@
             :items="menuItems"
             chips
             prepend-icon="mdi-heart"
-            label="Global features update selection"
+            label="Global features selection"
             multiple
             outlined
+            @change="refreshNodes"
           ></v-select>
         </v-col>
         <v-col cols="12">
+          <p>debug {{selectedItems}}</p>
+          <p>debug {{ nodes }}</p>
           <div v-for="(node, indexNode) in nodes" :key="indexNode">
-            <v-checkbox
-              v-model="nodes[indexNode].included"
-              :label="node.name"
-              :true-value="true"
-              :false-value="false"
-            ></v-checkbox>
+            <h2>{{ node.name }}</h2>
+            <div v-for="(item, index) in menuItems" :key="index">
+              <v-checkbox
+                v-model="node.features"
+                :label="item"
+                :value="selectedItems.includes(item) ? item : null"
+              ></v-checkbox>
+            </div>
           </div>
         </v-col>
       </v-row>
     </v-container>
-    <p>debug {{ nodes }}</p>
   </v-form>
 </template>
 
@@ -41,29 +45,32 @@ export default {
   data() {
     return {
       menuItems: ["Authentication", "Underlay", "VxLan"],
-      selectedItems: ["Authentication", "Underlay", "VxLan"],
-      nodes: [],
-      //nodes: [
-      //  {
-      //    name: "node A",
-      //    included: true,
-      //  },
-      //  {
-      //    name: "node B",
-      //    included: true,
-      //  }
-      //]
+      selectedItems: ["Authentication", "Underlay"],
+      nodes: []
     };
+  },
+  methods: {
+    refreshNodes: function() {
+      var node;
+      console.log("here are the nodes: " + this.nodes);
+      for (node of this.nodes) {
+        console.log(node.features);
+        node.features = this.selectedItems;
+      }
+    }
   },
   created() {
     ChangeService.getNodes() // <-----
       .then(response => {
         var node;
-        var nodes = []
+        var nodes = [];
         for (node of response.data) {
-          nodes.push({"name": node, included: true})
+          nodes.push({
+            name: node,
+            features: this.selectedItems
+          });
         }
-        this.nodes = nodes; // <--- set the events data
+        this.nodes = nodes;
       });
   },
   computed: {
@@ -79,7 +86,7 @@ export default {
         .slice(0, 5)
         .replace(/:/, "-");
       return "CHG" + "-" + date + "-" + time;
-    },
+    }
   }
 };
 </script>

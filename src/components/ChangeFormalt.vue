@@ -13,39 +13,57 @@
             :items="menuItems"
             chips
             prepend-icon="mdi-heart"
-            label="Global features selection"
+            label="Global features update selection"
             multiple
             outlined
           ></v-select>
         </v-col>
         <v-col cols="12">
-          <p>debug {{selectedItems}}</p>
-          <p>debug {{ nodes }}</p>
           <div v-for="(node, indexNode) in nodes" :key="indexNode">
-            <h2>{{ node.name }}</h2>
-            <div v-for="(item, index) in menuItems" :key="index">
-              <v-checkbox
-                v-model="node.features[index]"
-                :label="item"
-                :value="selectedItems.includes(item) ? item : null"
-                :true-value="item"
-                :false-value="null"
-              ></v-checkbox>
-            </div>
+            <v-checkbox v-model="nodesL" :label="node.name" :value="node.name"></v-checkbox>
           </div>
         </v-col>
       </v-row>
     </v-container>
+    <p>debug {{ nodes }}</p>
+    <p>debug {{ nodesL }}</p>
+    <p>debug {{ selectedItems }}</p>
   </v-form>
 </template>
 
 <script>
+import ChangeService from "@/services/ChangeService.js";
+
 export default {
   data() {
     return {
       menuItems: ["Authentication", "Underlay", "VxLan"],
-      selectedItems: ["Authentication", "Underlay"]
+      selectedItems: ["Authentication", "Underlay", "VxLan"],
+      nodes: [],
+      nodesL: []
+      //nodes: [
+      //  {
+      //    name: "node A",
+      //    included: true,
+      //  },
+      //  {
+      //    name: "node B",
+      //    included: true,
+      //  }
+      //]
     };
+  },
+  created() {
+    ChangeService.getNodes() // <-----
+      .then(response => {
+        var node;
+        var nodes = [];
+        for (node of response.data) {
+          nodes.push({ name: node, included: true });
+        }
+        this.nodes = nodes;
+        this.nodesL = response.data; // <--- set the events data
+      });
   },
   computed: {
     rName() {
@@ -60,24 +78,7 @@ export default {
         .slice(0, 5)
         .replace(/:/, "-");
       return "CHG" + "-" + date + "-" + time;
-    },
-    nodes() {
-      var defFeatures = [];
-      var feature;
-      for (feature of this.menuItems) {
-        this.selectedItems.includes(feature) ? defFeatures.push(feature) : null;
-      }
-      return [
-        {
-          name: "node A",
-          features: defFeatures
-        },
-        {
-          name: "node B",
-          features: defFeatures
-        }
-      ];
-    },
+    }
   }
 };
 </script>
