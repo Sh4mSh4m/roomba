@@ -29,6 +29,7 @@
                 v-model="node.features"
                 :label="item"
                 :value="selectedItems.includes(item) ? item : null"
+                @change="refNode(indexNode, index)"
               ></v-checkbox>
             </div>
           </div>
@@ -50,6 +51,15 @@ export default {
     };
   },
   methods: {
+    refNode(indexNode, index) {
+      const feature = this.menuItems[index];
+      var currentFeatures = this.nodes[indexNode].features;
+      if (currentFeatures.includes(feature)) {
+        currentFeatures.splice(currentFeatures.indexOf(feature), 1);
+      } else {
+        currentFeatures.push(feature);
+      }
+    },
     refreshNodes: function() {
       var node;
       console.log("here are the nodes: " + this.nodes);
