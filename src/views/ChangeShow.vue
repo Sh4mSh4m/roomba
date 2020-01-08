@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols="6">
-          <ChangeMainCard :change="change" />
+          <ChangeMainCard :change="change" @sync-change="refresh" />
         </v-col>
         <v-col cols="6">
           <Poller @sync-change="refresh" />
@@ -82,7 +82,7 @@ export default {
       //console.log("yeahhh");
     },
     refresh() {
-      //console.log("refreshing wesh");
+      console.log("refreshing wesh");
       ChangeService.getChange(this.changeid) // <-----
         .then(response => {
           this.change = response.data; // <--- set the events data

@@ -27,6 +27,11 @@ export default {
       action: "compute"
     });
   },
+  sendToQualChange(id) {
+    return apiClient.put("/change/" + id, {
+      action: "setup_qual"
+    });
+  },
   getNodes() {
     return apiClient.get("/nodes");
   }

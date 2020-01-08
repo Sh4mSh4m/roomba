@@ -10,7 +10,9 @@
     <v-card-actions>
       <v-spacer></v-spacer>
 
-      <BtnTooltipBottom icon="mdi-forklift" tooltiptext="Prepare qualification environment" />
+      <BtnTooltipBottom icon="mdi-refresh" tooltiptext="Refresh change" @click="emits"/>
+
+      <BtnTooltipBottom icon="mdi-forklift" tooltiptext="Prepare qualification environment" @click="emits"/>
 
       <BtnTooltipBottom
         icon="mdi-checkbox-multiple-marked-circle-outline"
@@ -33,6 +35,11 @@ export default {
   },
   components: {
     BtnTooltipBottom
+  },
+  methods: {
+    emits() {
+      this.$emit("sync-change");
+    },
   }
 };
 </script>
