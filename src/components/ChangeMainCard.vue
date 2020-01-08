@@ -10,9 +10,15 @@
     <v-card-actions>
       <v-spacer></v-spacer>
 
-      <BtnTooltipBottom icon="mdi-refresh" tooltiptext="Refresh change" @click="emits"/>
+      <div @click="emits">
+        <BtnTooltipBottom icon="mdi-refresh" tooltiptext="Refresh change" />
+      </div>
 
-      <BtnTooltipBottom icon="mdi-forklift" tooltiptext="Prepare qualification environment" @click="emits"/>
+      <div @click="qual">
+        <BtnTooltipBottom 
+          icon="mdi-forklift" 
+          tooltiptext="Prepare qualification environment"/>
+      </div>
 
       <BtnTooltipBottom
         icon="mdi-checkbox-multiple-marked-circle-outline"
@@ -38,8 +44,13 @@ export default {
   },
   methods: {
     emits() {
-      this.$emit("sync-change");
+      console.log('hit refresh')
+      this.$emit('sync-change');
     },
+    qual() {
+      console.log('hit setup-qual')
+      this.$emit('setup-qual')
+    }
   }
 };
 </script>
