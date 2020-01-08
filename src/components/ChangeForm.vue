@@ -3,14 +3,14 @@
     <v-container>
       <v-row>
         <v-col cols="4">
-          <v-text-field label="Name" type="text" :value="rName" />
+          <v-text-field label="Name" type="text" :value="changeName" />
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12">
           <v-select
-            v-model="selectedItems"
-            :items="menuItems"
+            v-model="basicFeatures"
+            :items="availableFeatures"
             chips
             prepend-icon="mdi-heart"
             label="Global features selection"
@@ -19,22 +19,18 @@
             @change="refreshNodes"
           ></v-select>
         </v-col>
-        <v-col cols="12">
-          <p>debug {{selectedItems}}</p>
-          <p>debug {{ nodes }}</p>
-          <div v-for="(node, indexNode) in nodes" :key="indexNode">
+      </v-row>
+      <v-row>
+        <v-col v-for="(node, indexNode) in nodes" :key="indexNode" cols="2">
             <h2>{{ node.name }}</h2>
-            <div v-for="(item, index) in menuItems" :key="index">
-              <v-checkbox
-                v-model="node.features"
-                :label="item"
-                :value="item"
-              ></v-checkbox>
+            <div v-for="(item, index) in availableFeatures" :key="index">
+              <v-checkbox v-model="node.features" :label="item" :value="item"></v-checkbox>
             </div>
-          </div>
         </v-col>
       </v-row>
     </v-container>
+    <p>debug {{basicFeatures}}</p>
+    <p>debug {{ nodes }}</p>
   </v-form>
 </template>
 
@@ -44,46 +40,27 @@ import ChangeService from "@/services/ChangeService.js";
 export default {
   data() {
     return {
-      menuItems: ["Authentication", "Underlay", "VxLan"],
-      selectedItems: ["Authentication", "Underlay"],
+      availableFeatures: ["Authentication", "Underlay", "VxLan"],
+      basicFeatures: ["Authentication", "Underlay"],
       nodes: []
     };
-  },
-  methods: {
-    refNode(indexNode, index) {
-      const feature = this.menuItems[index];
-      var currentFeatures = this.nodes[indexNode].features;
-      if (currentFeatures.includes(feature)) {
-        currentFeatures.splice(currentFeatures.indexOf(feature), 1);
-      } else {
-        currentFeatures.push(feature);
-      }
-    },
-    refreshNodes: function() {
-      var node;
-      console.log("here are the nodes: " + this.nodes);
-      for (node of this.nodes) {
-        console.log(node.features);
-        node.features = this.selectedItems;
-      }
-    }
   },
   created() {
     ChangeService.getNodes() // <-----
       .then(response => {
         var node;
-        var nodes = [];
+        var nodesTmp = [];
         for (node of response.data) {
-          nodes.push({
+          nodesTmp.push({
             name: node,
-            features: this.selectedItems
+            features: this.basicFeatures
           });
         }
-        this.nodes = nodes;
+        this.nodes = nodesTmp;
       });
   },
   computed: {
-    rName() {
+    changeName() {
       const d = new Date();
       const date = d
         .toLocaleDateString()
@@ -95,6 +72,16 @@ export default {
         .slice(0, 5)
         .replace(/:/, "-");
       return "CHG" + "-" + date + "-" + time;
+    }
+  },
+  methods: {
+    refreshNodes: function() {
+      var node;
+      console.log("here are the nodes: " + this.nodes);
+      for (node of this.nodes) {
+        console.log(node.features);
+        node.features = this.basicFeatures;
+      }
     }
   }
 };
