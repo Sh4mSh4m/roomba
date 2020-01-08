@@ -28,8 +28,7 @@
               <v-checkbox
                 v-model="node.features"
                 :label="item"
-                :value="selectedItems.includes(item) ? item : null"
-                @change="refNode(indexNode, index)"
+                :value="item"
               ></v-checkbox>
             </div>
           </div>
