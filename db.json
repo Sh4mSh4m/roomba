@@ -1,112 +1,170 @@
 {
-    "nodes": [
-        "leaf_a",
-        "leaf_b",
-        "spine_a"
-    ],
-    "changes": [
+  "nodes": [
+    "leaf_a",
+    "leaf_b",
+    "spine_a"
+  ],
+  "changes": [
+    {
+      "id": 1,
+      "_id": {
+        "$oid": "5e0e24e34b730926bd1982b8"
+      },
+      "configlets": [
         {
-            "id": 1,
-            "_id": {
-                "$oid": "5e0e24e34b730926bd1982b8"
-            },
-            "configlets": [
-                {
-                    "change_buffer": [
-                        "description leaf_d_spine_d",
-                        "no switchport",
-                        "ip address 10.0.10.2/30",
-                        "ip ospf network point-to-point"
-                    ],
-                    "cmd_lines": [
-                        "description leaf_d_spine_d",
-                        "no switchport",
-                        "ip address 10.0.10.2/30",
-                        "ip ospf network point-to-point"
-                    ],
-                    "context": "interface Ethernet1",
-                    "feature": "underlay",
-                    "node": "leaf_d",
-                    "rollback_buffer": [
-                        "no description leaf_d_spine_d",
-                        "no no switchport",
-                        "no ip address 10.0.10.2/30",
-                        "no ip ospf network point-to-point"
-                    ]
-                },
-                {
-                    "change_buffer": [
-                        "description leaf_d_spine_d",
-                        "no switchport",
-                        "ip address 10.0.10.1/30",
-                        "ip ospf network point-to-point"
-                    ],
-                    "cmd_lines": [
-                        "description leaf_d_spine_d",
-                        "no switchport",
-                        "ip address 10.0.10.1/30",
-                        "ip ospf network point-to-point"
-                    ],
-                    "context": "interface Ethernet1",
-                    "feature": "underlay",
-                    "node": "spine_d",
-                    "rollback_buffer": [
-                        "no description leaf_d_spine_d",
-                        "no no switchport",
-                        "no ip address 10.0.10.1/30",
-                        "no ip ospf network point-to-point"
-                    ]
-                },
-                {
-                    "change_buffer": [
-                        "description leaf_e_spine_d",
-                        "no switchport",
-                        "ip address 10.0.20.1/30",
-                        "ip ospf network point-to-point"
-                    ],
-                    "cmd_lines": [
-                        "description leaf_e_spine_d",
-                        "no switchport",
-                        "ip address 10.0.20.1/30",
-                        "ip ospf network point-to-point"
-                    ],
-                    "context": "interface Ethernet2",
-                    "feature": "underlay",
-                    "node": "spine_d",
-                    "rollback_buffer": [
-                        "no description leaf_e_spine_d",
-                        "no no switchport",
-                        "no ip address 10.0.20.1/30",
-                        "no ip ospf network point-to-point"
-                    ]
-                },
-                {
-                    "change_buffer": [
-                        "description leaf_e_spine_d",
-                        "no switchport",
-                        "ip address 10.0.20.2/30",
-                        "ip ospf network point-to-point"
-                    ],
-                    "cmd_lines": [
-                        "description leaf_e_spine_d",
-                        "no switchport",
-                        "ip address 10.0.20.2/30",
-                        "ip ospf network point-to-point"
-                    ],
-                    "context": "interface Ethernet1",
-                    "feature": "underlay",
-                    "node": "leaf_e",
-                    "rollback_buffer": [
-                        "no description leaf_e_spine_d",
-                        "no no switchport",
-                        "no ip address 10.0.20.2/30",
-                        "no ip ospf network point-to-point"
-                    ]
-                }
-            ],
-            "status": "composed",
-            "timestamp": 1577985251.5458918,
-            "version": 3
+          "change_buffer": [
+            "description leaf_d_spine_d",
+            "no switchport",
+            "ip address 10.0.10.2/30",
+            "ip ospf network point-to-point"
+          ],
+          "cmd_lines": [
+            "description leaf_d_spine_d",
+            "no switchport",
+            "ip address 10.0.10.2/30",
+            "ip ospf network point-to-point"
+          ],
+          "context": "interface Ethernet1",
+          "feature": "underlay",
+          "node": "leaf_d",
+          "rollback_buffer": [
+            "no description leaf_d_spine_d",
+            "no no switchport",
+            "no ip address 10.0.10.2/30",
+            "no ip ospf network point-to-point"
+          ]
+        },
+        {
+          "change_buffer": [
+            "description leaf_d_spine_d",
+            "no switchport",
+            "ip address 10.0.10.1/30",
+            "ip ospf network point-to-point"
+          ],
+          "cmd_lines": [
+            "description leaf_d_spine_d",
+            "no switchport",
+            "ip address 10.0.10.1/30",
+            "ip ospf network point-to-point"
+          ],
+          "context": "interface Ethernet1",
+          "feature": "underlay",
+          "node": "spine_d",
+          "rollback_buffer": [
+            "no description leaf_d_spine_d",
+            "no no switchport",
+            "no ip address 10.0.10.1/30",
+            "no ip ospf network point-to-point"
+          ]
+        },
+        {
+          "change_buffer": [
+            "description leaf_e_spine_d",
+            "no switchport",
+            "ip address 10.0.20.1/30",
+            "ip ospf network point-to-point"
+          ],
+          "cmd_lines": [
+            "description leaf_e_spine_d",
+            "no switchport",
+            "ip address 10.0.20.1/30",
+            "ip ospf network point-to-point"
+          ],
+          "context": "interface Ethernet2",
+          "feature": "underlay",
+          "node": "spine_d",
+          "rollback_buffer": [
+            "no description leaf_e_spine_d",
+            "no no switchport",
+            "no ip address 10.0.20.1/30",
+            "no ip ospf network point-to-point"
+          ]
+        },
+        {
+          "change_buffer": [
+            "description leaf_e_spine_d",
+            "no switchport",
+            "ip address 10.0.20.2/30",
+            "ip ospf network point-to-point"
+          ],
+          "cmd_lines": [
+            "description leaf_e_spine_d",
+            "no switchport",
+            "ip address 10.0.20.2/30",
+            "ip ospf network point-to-point"
+          ],
+          "context": "interface Ethernet1",
+          "feature": "underlay",
+          "node": "leaf_e",
+          "rollback_buffer": [
+            "no description leaf_e_spine_d",
+            "no no switchport",
+            "no ip address 10.0.20.2/30",
+            "no ip ospf network point-to-point"
+          ]
         }
-    ]
+      ],
+      "status": "composed",
+      "timestamp": 1577985251.5458918,
+      "version": 3
+    },
+    {
+      "body": {
+        "name": "CHG-2020-01-08-10-56",
+        "nodesSpecs": [
+          {
+            "node": "leaf_a",
+            "features": [
+              "Authentication",
+              "Underlay"
+            ]
+          },
+          {
+            "node": "leaf_b",
+            "features": [
+              "Authentication",
+              "Underlay"
+            ]
+          },
+          {
+            "node": "spine_a",
+            "features": [
+              "Authentication",
+              "Underlay"
+            ]
+          }
+        ]
+      },
+      "id": 2
+    },
+    {
+      "body": {
+        "name": "CHG-2020-01-08-11-15",
+        "nodesSpecs": [
+          {
+            "node": "leaf_a",
+            "features": [
+              "Authentication",
+              "Underlay"
+            ]
+          },
+          {
+            "node": "leaf_b",
+            "features": [
+              "Authentication",
+              "Underlay"
+            ]
+          },
+          {
+            "node": "spine_a",
+            "features": [
+              "Authentication",
+              "Underlay"
+            ]
+          }
+        ]
+      },
+      "id": 3
+    }
+  ]
 }

@@ -69,11 +69,13 @@ export default {
       }
       return [
         {
-          name: "node A",
+          fabric: 0,
+          node: "node A",
           features: defFeatures
         },
         {
-          name: "node B",
+          fabric: 0,
+          node: "node B",
           features: defFeatures
         }
       ];

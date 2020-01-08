@@ -19,5 +19,10 @@ export default {
     },
     getNodes() {
         return apiClient.get('/nodes')
+    },
+    createChange(body) {
+        return apiClient.post('/changes', {
+            body: body
+          })
     }
 }

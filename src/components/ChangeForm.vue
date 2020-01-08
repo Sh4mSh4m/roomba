@@ -5,6 +5,10 @@
         <v-col cols="4">
           <v-text-field label="Name" type="text" :value="changeName" />
         </v-col>
+        <v-spacer></v-spacer>
+        <v-col>
+          <v-btn @click="createChange">Create change</v-btn>
+        </v-col>
       </v-row>
       <v-row>
         <v-col cols="12">
@@ -21,16 +25,15 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col v-for="(node, indexNode) in nodes" :key="indexNode" cols="2">
-            <h2>{{ node.name }}</h2>
-            <div v-for="(item, index) in availableFeatures" :key="index">
-              <v-checkbox v-model="node.features" :label="item" :value="item"></v-checkbox>
-            </div>
+        <v-col v-for="(nodeSpec, indexNode) in nodesSpecs" :key="indexNode" cols="2">
+          <h2>{{ nodeSpec.node }}</h2>
+          <div v-for="(item, index) in availableFeatures" :key="index">
+            <v-checkbox v-model="nodeSpec.features" :label="item" :value="item"></v-checkbox>
+          </div>
         </v-col>
       </v-row>
     </v-container>
-    <p>debug {{basicFeatures}}</p>
-    <p>debug {{ nodes }}</p>
+
   </v-form>
 </template>
 
@@ -42,7 +45,7 @@ export default {
     return {
       availableFeatures: ["Authentication", "Underlay", "VxLan"],
       basicFeatures: ["Authentication", "Underlay"],
-      nodes: []
+      nodesSpecs: []
     };
   },
   created() {
@@ -52,11 +55,11 @@ export default {
         var nodesTmp = [];
         for (node of response.data) {
           nodesTmp.push({
-            name: node,
+            node: node,
             features: this.basicFeatures
           });
         }
-        this.nodes = nodesTmp;
+        this.nodesSpecs = nodesTmp;
       });
   },
   computed: {
@@ -72,16 +75,29 @@ export default {
         .slice(0, 5)
         .replace(/:/, "-");
       return "CHG" + "-" + date + "-" + time;
+    },
+    postBody() {
+      return {
+        name: this.changeName,
+        nodesSpecs: this.nodesSpecs,
+      }
     }
+
   },
   methods: {
     refreshNodes: function() {
-      var node;
-      console.log("here are the nodes: " + this.nodes);
-      for (node of this.nodes) {
-        console.log(node.features);
-        node.features = this.basicFeatures;
+      var nodeSpec;
+      for (nodeSpec of this.nodesSpecs) {
+        nodeSpec.features = this.basicFeatures;
       }
+    },
+    createChange: function() {
+      ChangeService.createChange(this.postBody)
+        .then(response => {
+          console.log("sent and received")
+          console.log(response.data)
+          this.$router.push({ name: "change", params: {id: response.id}})
+        })
     }
   }
 };
