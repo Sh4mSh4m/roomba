@@ -33,7 +33,6 @@
         </v-col>
       </v-row>
     </v-container>
-
   </v-form>
 </template>
 
@@ -78,11 +77,11 @@ export default {
     },
     postBody() {
       return {
+        fabric: 0,
         name: this.changeName,
-        nodesSpecs: this.nodesSpecs,
-      }
+        nodesSpecs: this.nodesSpecs
+      };
     }
-
   },
   methods: {
     refreshNodes: function() {
@@ -92,12 +91,11 @@ export default {
       }
     },
     createChange: function() {
-      ChangeService.createChange(this.postBody)
-        .then(response => {
-          console.log("sent and received")
-          console.log(response.data)
-          this.$router.push({ name: "change", params: {id: response.id}})
-        })
+      ChangeService.createChange(this.postBody).then(response => {
+        console.log("sent and received");
+        console.log(response.data);
+        this.$router.push({ name: "change", params: { id: response.id } });
+      });
     }
   }
 };
