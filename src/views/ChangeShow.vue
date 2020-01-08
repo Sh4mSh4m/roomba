@@ -12,15 +12,27 @@
       <v-radio-group v-model="c_display" row>
         <v-radio name="c_diplay" label="Command lines" value="CMD"></v-radio>
         <v-radio name="c_diplay" label="Change buffer" value="CHANGE"></v-radio>
-        <v-radio name="c_diplay" label="Rollback buffer" value="ROLLBACK"></v-radio>
+        <v-radio
+          name="c_diplay"
+          label="Rollback buffer"
+          value="ROLLBACK"
+        ></v-radio>
       </v-radio-group>
       <v-row v-for="(configlets, node) in configletsPerNode" :key="node">
         <v-col>
           <v-card>
             <v-card-title>{{ node }}</v-card-title>
             <v-row>
-              <v-col cols="4" v-for="(configlet, index) in configlets" :key="index">
-                <ConfigletCard :configlet="configlet" :c_display="c_display" :index="index" />
+              <v-col
+                cols="4"
+                v-for="(configlet, index) in configlets"
+                :key="index"
+              >
+                <ConfigletCard
+                  :configlet="configlet"
+                  :c_display="c_display"
+                  :index="index"
+                />
               </v-col>
             </v-row>
           </v-card>
@@ -51,10 +63,14 @@ export default {
     Poller
   },
   created() {
-    ChangeService.getChange(this.changeid) // <-----
-      .then(response => {
-        this.change = response.data; // <--- set the events data
-      });
+    ChangeService.getChange(this.changeid).then(response => {
+      this.change = response.data;
+    });
+  },
+  mounted() {
+    ChangeService.computeChange(this.changeid).then(response => {
+      this.change = response.data;
+    });
   },
   computed: {
     configletsPerNode() {
@@ -76,5 +92,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -25,10 +25,18 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col v-for="(nodeSpec, indexNode) in nodesSpecs" :key="indexNode" cols="2">
+        <v-col
+          v-for="(nodeSpec, indexNode) in nodesSpecs"
+          :key="indexNode"
+          cols="2"
+        >
           <h2>{{ nodeSpec.node }}</h2>
           <div v-for="(item, index) in availableFeatures" :key="index">
-            <v-checkbox v-model="nodeSpec.features" :label="item" :value="item"></v-checkbox>
+            <v-checkbox
+              v-model="nodeSpec.features"
+              :label="item"
+              :value="item"
+            ></v-checkbox>
           </div>
         </v-col>
       </v-row>
@@ -93,14 +101,14 @@ export default {
     createChange: function() {
       ChangeService.createChange(this.postBody).then(response => {
         const newChangeId = response.data._id.$oid;
-        this.$router.push({ name: "change", params: { changeid: newChangeId } });
+        this.$router.push({
+          name: "change",
+          params: { changeid: newChangeId }
+        });
       });
     }
   }
 };
 </script>
 
-
-
-<style>
-</style>
+<style></style>

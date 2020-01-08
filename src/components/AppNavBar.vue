@@ -5,17 +5,24 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn :to="{name: 'home'}" text rounded>
+      <v-btn :to="{ name: 'home' }" text rounded>
         Home
         <v-icon>mdi-home-circle-outline</v-icon>
       </v-btn>
 
-      <v-btn :to="{name: 'change_new'}" text rounded>
+      <v-btn :to="{ name: 'change_new' }" text rounded>
         Change Create
         <v-icon>mdi-file-plus-outline</v-icon>
       </v-btn>
 
-      <v-btn :to="{name: 'change', params: { changeid: '5e0e24e34b730926bd1982b8' }}" text rounded>
+      <v-btn
+        :to="{
+          name: 'change',
+          params: { changeid: '5e0e24e34b730926bd1982b8' }
+        }"
+        text
+        rounded
+      >
         Test #change
         <v-icon>mdi-file-move-outline</v-icon>
       </v-btn>
@@ -47,5 +54,4 @@
 export default {};
 </script>
 
-<style>
-</style>
+<style></style>

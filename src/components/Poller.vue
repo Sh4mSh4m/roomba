@@ -3,9 +3,6 @@
 </template>
 
 <script>
-//webs.onmessage = function(event) {
-//  console.log(event.data);
-//};
 export default {
   data() {
     return {
@@ -24,7 +21,7 @@ export default {
       let socket = new WebSocket("ws://localhost:8765");
       socket.onopen = () => socket.send(JSON.stringify(this.message));
       socket.onmessage = () => {
-        //console.log(e);
+        console.log(e);
         this.emits();
       };
     }
@@ -35,6 +32,4 @@ export default {
 };
 </script>
 
-
-<style>
-</style>
+<style></style>
