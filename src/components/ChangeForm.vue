@@ -42,8 +42,8 @@ import ChangeService from "@/services/ChangeService.js";
 export default {
   data() {
     return {
-      availableFeatures: ["Authentication", "Underlay", "VxLan"],
-      basicFeatures: ["Authentication", "Underlay"],
+      availableFeatures: ["authentication", "underlay", "vxlan"],
+      basicFeatures: ["authentication", "underlay"],
       nodesSpecs: []
     };
   },
@@ -92,14 +92,15 @@ export default {
     },
     createChange: function() {
       ChangeService.createChange(this.postBody).then(response => {
-        console.log("sent and received");
-        console.log(response.data);
-        this.$router.push({ name: "change", params: { id: response.id } });
+        const newChangeId = response.data._id.$oid;
+        this.$router.push({ name: "change", params: { changeid: newChangeId } });
       });
     }
   }
 };
 </script>
+
+
 
 <style>
 </style>
