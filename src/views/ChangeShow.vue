@@ -1,5 +1,25 @@
 <template>
   <div>
+    <v-snackbar
+      v-model="notify.snackbar"
+      :bottom="notify.y === 'bottom'"
+      :color="notify.color"
+      :left="notify.x === 'left'"
+      :multi-line="notify.mode === 'multi-line'"
+      :right="notify.x === 'right'"
+      :timeout="notify.timeout"
+      :top="notify.y === 'top'"
+      :vertical="notify.mode === 'vertical'"
+    >
+      {{ notify.text }}
+      <v-btn
+        dark
+        text
+        @click="notify.snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
     <v-container>
       <v-row>
         <v-col cols="6">
@@ -60,6 +80,15 @@ export default {
   props: ["changeid"],
   data() {
     return {
+      notify: {
+        color: '',
+        mode: '',
+        snackbar: false,
+        text: 'Hello, I\'m a snackbar',
+        timeout: 4000,
+        x: 'right',
+        y: 'top',
+      },
       change: {},
       qualfabric: {},
       c_display: "CMD"
@@ -80,6 +109,7 @@ export default {
     ChangeService.computeChange(this.changeid).then(response => {
       this.change = response.data;
     });
+    this.evalQual();
   },
   computed: {
     configletsPerNode() {
@@ -100,6 +130,7 @@ export default {
       console.log("refreshing wesh");
       this.fetchChange(this.changeid);
       this.fetchQualfabric(this.change.qualfabric_id);
+      this.notify.snackbar = true;
     },
     fetchChange(id) {
       ChangeService.getChange(id)
