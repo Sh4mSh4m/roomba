@@ -1,21 +1,21 @@
 <template>
   <div>
     <v-snackbar
-      v-model="notify.snackbar"
-      :bottom="notify.y === 'bottom'"
-      :color="notify.color"
-      :left="notify.x === 'left'"
-      :multi-line="notify.mode === 'multi-line'"
-      :right="notify.x === 'right'"
-      :timeout="notify.timeout"
-      :top="notify.y === 'top'"
-      :vertical="notify.mode === 'vertical'"
+      v-model="notification.snackbar"
+      :bottom="notification.y === 'bottom'"
+      :color="notification.color"
+      :left="notification.x === 'left'"
+      :multi-line="notification.mode === 'multi-line'"
+      :right="notification.x === 'right'"
+      :timeout="notification.timeout"
+      :top="notification.y === 'top'"
+      :vertical="notification.mode === 'vertical'"
     >
-      {{ notify.text }}
+      {{ notification.text }}
       <v-btn
         dark
         text
-        @click="notify.snackbar = false"
+        @click="notification.snackbar = false"
       >
         Close
       </v-btn>
@@ -80,7 +80,7 @@ export default {
   props: ["changeid"],
   data() {
     return {
-      notify: {
+      notification: {
         color: '',
         mode: '',
         snackbar: false,
@@ -109,7 +109,6 @@ export default {
     ChangeService.computeChange(this.changeid).then(response => {
       this.change = response.data;
     });
-    this.evalQual();
   },
   computed: {
     configletsPerNode() {
@@ -130,10 +129,18 @@ export default {
       console.log("refreshing wesh");
       this.fetchChange(this.changeid);
       this.fetchQualfabric(this.change.qualfabric_id);
-      this.notify.snackbar = true;
+      this.notification.snackbar = true;
     },
     refreshMsg(message) {
-      console.log(" message: " + message)
+      if (message.type == "refresh"){
+        this.fetchChange(this.changeid);
+        this.fetchQualfabric(this.change.qualfabric_id);
+        this.notification.snackbar = true;
+        this.notification.text = message.snack_msg;
+      }
+      else {
+        console.log("websocket message unknown")
+      }
     },
     fetchChange(id) {
       ChangeService.getChange(id)

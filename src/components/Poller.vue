@@ -9,7 +9,7 @@ export default {
   },
   data() {
     return {
-      message: {
+      imessage: {
         action: "register",
         change_id: this.changeid,
         source: "client",
@@ -22,10 +22,11 @@ export default {
       this.$emit("sync-change", message);
     },
     connect() {
+      console.log("Connected to websocket server")
       let socket = new WebSocket("ws://localhost:8765");
-      socket.onopen = () => socket.send(JSON.stringify(this.message));
+      socket.onopen = () => socket.send(JSON.stringify(this.imessage));
       socket.onmessage = (e) => {
-        let message = e.data
+        let message = JSON.parse(e.data)
         console.log("SENDING: " + message)
         this.emits(message);
       };
