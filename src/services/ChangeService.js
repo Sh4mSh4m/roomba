@@ -27,10 +27,16 @@ export default {
       action: "compute"
     });
   },
+  evalQualForChange(id) {
+    return apiClient.get("/change/" + id +'/qualfabric');
+  },
   sendToQualChange(id) {
     return apiClient.put("/change/" + id, {
       action: "setup_qual"
     });
+  },
+  getQualfabric(id) {
+    return apiClient.get("/qualfabric/" + id)
   },
   getNodes() {
     return apiClient.get("/nodes");

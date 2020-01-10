@@ -7,10 +7,11 @@
             :change="change" 
             @sync-change="refresh"
             @setup-qual="setupQual"
+            @eval-qual="evalQual"
            />
         </v-col>
         <v-col cols="6">
-          <Poller @sync-change="refresh" />
+          <ChangeQualCard v-if="hasQualfabricId" :qualfabric="qualfabric"/>
         </v-col>
       </v-row>
       <v-radio-group v-model="c_display" row>
@@ -43,12 +44,14 @@
         </v-col>
       </v-row>
     </v-container>
+    <Poller @sync-change="refresh" />
   </div>
 </template>
 
 <script>
 import ChangeService from "@/services/ChangeService.js";
 import ChangeMainCard from "@/components/ChangeMainCard.vue";
+import ChangeQualCard from "@/components/ChangeQualCard.vue";
 import ConfigletCard from "@/components/ChangeConfigletCard.vue";
 import Poller from "@/components/Poller.vue";
 import _ from "lodash";
@@ -58,11 +61,13 @@ export default {
   data() {
     return {
       change: {},
+      qualfabric: {},
       c_display: "CMD"
     };
   },
   components: {
     ChangeMainCard,
+    ChangeQualCard,
     ConfigletCard,
     Poller
   },
@@ -79,25 +84,55 @@ export default {
   computed: {
     configletsPerNode() {
       return _.groupBy(this.change.configlets, "node");
+    },
+    hasQualfabricId() {
+      return this.containsKey(this.change, 'qualfabric_id')
     }
   },
   methods: {
+    containsKey(obj, key) {
+      return Object.keys(obj).includes(key);
+    },
     log() {
       //console.log("yeahhh");
     },
     refresh() {
       console.log("refreshing wesh");
-      ChangeService.getChange(this.changeid) // <-----
+      this.fetchChange(this.changeid);
+      this.fetchQualfabric(this.change.qualfabric_id);
+    },
+    fetchChange(id) {
+      ChangeService.getChange(id)
         .then(response => {
-          this.change = response.data; // <--- set the events data
+          this.change = response.data;
+        });
+    },
+    fetchQualfabric(id) {
+      ChangeService.getQualfabric(id)
+        .then(response => {
+          this.qualfabric = response.data;
+        });
+    },
+    evalQual() {
+      console.log("go for qual eval");
+      ChangeService.evalQualForChange(this.changeid)
+        .then(response => {
+          this.change = response.data;
         });
     },
     setupQual() {
       console.log("go for qual setup");
-      ChangeService.sendToQualChange(this.changeid) // <-----
+      ChangeService.sendToQualChange(this.changeid)
         .then(response => {
-          this.change = response.data; // <--- set the events data
+          this.change = response.data;
         });
+    }
+  },
+  watch: {
+    change: function() {
+      if (this.hasQualfabricId) {
+        this.fetchQualfabric(this.change.qualfabric_id)
+      }
     }
   }
 };
