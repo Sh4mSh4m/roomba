@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title># {{ change._id.$oid }}</v-card-title>
+    <v-card-title># {{ change._id.$oid ? "test ok" : "Loading" }}</v-card-title>
     <v-card-subtitle>
       <ul>
         <li>Change status: {{ change.status }}</li>

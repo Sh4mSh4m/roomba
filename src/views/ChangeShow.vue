@@ -64,7 +64,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <Poller @sync-change="refresh" />
+    <Poller @sync-change="refreshMsg" :changeid="changeid"/>
   </div>
 </template>
 
@@ -131,6 +131,9 @@ export default {
       this.fetchChange(this.changeid);
       this.fetchQualfabric(this.change.qualfabric_id);
       this.notify.snackbar = true;
+    },
+    refreshMsg(message) {
+      console.log(" message: " + message)
     },
     fetchChange(id) {
       ChangeService.getChange(id)
